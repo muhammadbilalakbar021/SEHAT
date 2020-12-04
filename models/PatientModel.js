@@ -40,7 +40,7 @@ patientSchema.statics.getPage = async function (page = 1, perPage = 10) {
 
 patientSchema.statics.validate = async function (RequestedBody) {
   //  Validating
-  return ({ error } = validatePatient(RequestedBody));
+  return validatePatient(RequestedBody);
 };
 
 //can be called on instance like. let p = new Patient(); p.doStuffOnSIngleRecord();
@@ -73,9 +73,10 @@ function validatePatient(patient) {
   // Designing JOI Validation schema
   const schema = Joi.object({
     name: Joi.string().min(3).required(),
+    description: Joi.string().min(3).required(),
   });
   // Returniing the resuslt
-  return schema.validate(patient);
+  return schema.validate(patient, { abortEarly: false });
 }
 
 patientSchema.set("toJSON", { virtuals: true });
