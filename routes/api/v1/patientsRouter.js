@@ -10,6 +10,12 @@ router.get("/", async (req, res) => {
   res.send(patientsRecord);
 });
 
+// Get request for returning patient by login
+router.get("/login", async (req, res) => {
+  const patientsRecord = await Patient.getPatientByEmailPasscode(req.body);
+  res.send(patientsRecord);
+});
+
 // Get request for returning specific patient
 router.get("/patient/:id", async (req, res) => {
   patient = await Patient.getPatientById(req.params.id);

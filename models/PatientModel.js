@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
+var sess_; // global session, NOT recommended
 
 const patientSchema = new mongoose.Schema({
   fname: String,
@@ -50,6 +51,17 @@ patientSchema.statics.validate = async function (RequestedBody) {
   return validatePatient(RequestedBody);
 };
 
+patientSchema.statics.getPatientByEmailPasscode = async function (RequestedInformation){
+  console.log("hello")
+  const patientCredientials = await PatientModel.findOne({ 
+    emailAddress: RequestedInformation.emailAddress,
+    password: RequestedInformation.password 
+  });  
+  console.log(patientCredientials);
+  sess_Id_ = patientCredientials._id;
+  return patientCredientials;
+};
+
 //can be called on instance like. let p = new Patient(); p.doStuffOnSIngleRecord();
 //dont use arrow functions here
 patientSchema.methods.addPatient = async function (PatientName) {
@@ -68,11 +80,11 @@ patientSchema.methods.addPatient = async function (PatientName) {
 
   await Patient_Obj.save();
   var result = [];
-  const product_Obj_Result = await PatientModel.find();
-  product_Obj_Result.forEach(function (doc, err) {
-    result.push(doc);
-  });
-  return result;
+  const product_Obj_Result = await PatientModel.find().sort( { _id : -1 } ).limit(1);;
+  // product_Obj_Result.forEach(function (doc, err) {
+  //   result.push(doc);
+  // });
+  return product_Obj_Result;
 };
 
 // patientSchema.virtual("annualSalary").get(function () {
