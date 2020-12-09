@@ -2,10 +2,17 @@ const mongoose = require("mongoose");
 const Joi = require("joi");
 
 const patientSchema = new mongoose.Schema({
-  patientName: String,
-  patientDescription: String,
-});
+  fname: String,
+  lname: String,
+  title: String,
+  age: Number,
+  DOB: String,
+  pic: String,
+  Ph: Number,
+  emailAddress: String,
+  password: String
 
+});
 const PatientModel = mongoose.model("PatientDb", patientSchema);
 
 // Its a static Method which can be called as Patient.doStuff();
@@ -48,8 +55,15 @@ patientSchema.statics.validate = async function (RequestedBody) {
 patientSchema.methods.addPatient = async function (PatientName) {
   // Add patient
   const Patient_Obj = new PatientModel({
-    patientName: PatientName.name,
-    patientDescription: PatientName.description,
+    fname: PatientName.fname,
+    lname: PatientName.lname,
+    title: PatientName.title,
+    age: PatientName.age,
+    DOB: PatientName.DOB,
+    pic: PatientName.pic,
+    Ph: PatientName.Ph,
+    emailAddress: PatientName.emailAddress,
+    password: PatientName.password
   });
 
   await Patient_Obj.save();
@@ -60,20 +74,29 @@ patientSchema.methods.addPatient = async function (PatientName) {
   });
   return result;
 };
-patientSchema.virtual("annualSalary").get(function () {
-  return this.salary * 12;
-});
+
+// patientSchema.virtual("annualSalary").get(function () {
+//   return this.salary * 12;
+// });
 
 patientSchema.post("save", async (doc) => {
   //https://mongoosejs.com/docs/middleware.html
   //this method will be called when a save is successful on a single record
+  
 });
 
 function validatePatient(patient) {
   // Designing JOI Validation schema
   const schema = Joi.object({
-    name: Joi.string().min(3).required(),
-    description: Joi.string().min(3).required(),
+    fname: Joi.string().min(3).required(),
+    lname: Joi.string().min(3).required(),
+    title: Joi.string().min(2).required(),
+    age: Joi.number().required(),
+    DOB: Joi.string().min(3).required(),
+    pic: Joi.string().required(),
+    Ph: Joi.number().required(),
+    emailAddress: Joi.string().min(6).required(),
+    password: Joi.string().min(5).required(),
   });
   // Returniing the resuslt
   return schema.validate(patient, { abortEarly: false });
