@@ -10,7 +10,9 @@ const patientSchema = new mongoose.Schema({
     pic: String,
     Ph: Number,
     emailAddress: String,
-    password: String
+    password: String,
+    isDoctor: Boolean,
+    isAdmin: Boolean
 
 });
 const PatientModel = mongoose.model("PatientDb", patientSchema);
@@ -51,7 +53,6 @@ patientSchema.statics.validate = async function(RequestedBody) {
 };
 
 patientSchema.statics.getPatientByEmailPasscode = async function(RequestedInformation) {
-    console.log("hello")
     const patientCredientials = await PatientModel.findOne({
         emailAddress: RequestedInformation.emailAddress,
         password: RequestedInformation.password
