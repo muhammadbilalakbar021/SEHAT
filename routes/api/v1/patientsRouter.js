@@ -20,7 +20,6 @@ router.post("/login", async(req, res) => {
 router.get("/patientById/:id", async(req, res) => {
     patient = await Patient.getPatientById(req.params.id);
     // If Patient exist, return patient record
-    console.log("hello")
     res.send(patient);
 });
 
@@ -35,10 +34,7 @@ router.post("/", patientValidator, async(req, res) => {
 router.get("/:page?/:perPage?", async(req, res) => {
     const page = req.params.page ? Number(req.params.page) : 1;
     const perPage = req.params.perPage ? Number(req.params.perPage) : 1;
-    //Bad Way
-    //const patients = await Patient.find().limit(perPage).skip((page - 1) * perPage);
 
-    //Good Way
     const patients = await Patient.getPage(page, perPage);
     res.send(patients);
 });
