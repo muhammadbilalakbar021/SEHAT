@@ -9,6 +9,7 @@ const patientSchema = new mongoose.Schema({
   DOB: String,
   pic: String,
   Ph: Number,
+  gender:String,
   emailAddress: String,
   password: String,
   role: {
@@ -83,6 +84,7 @@ patientSchema.methods.addPatient = async function (PatientName) {
     lname: PatientName.lname,
     title: PatientName.title,
     DOB: PatientName.DOB,
+	gender:PatientName.gender,
     pic: PatientName.pic,
     Ph: PatientName.Ph,
     emailAddress: PatientName.emailAddress,
@@ -117,6 +119,7 @@ function validatePatient(patient) {
     pic: Joi.string().required(),
     Ph: Joi.number().required(),
     emailAddress: Joi.string().email().min(6).required(),
+	gender:Joi.string().required(),
     password: Joi.string().min(5).required(),
   });
   // Returniing the resuslt
