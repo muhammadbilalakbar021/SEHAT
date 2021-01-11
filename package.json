@@ -1,24 +1,24 @@
 {
-    "name": "sehat",
-    "version": "1.0.0",
-    "description": "SEHAT in which we aim to provide an e-health care system for the general public located anywhere in the country. It is designed to overcome everyone’s medical needs in little time and with convenience. It allows users to monitor their health conditions. It also offers users the ability to contact any available doctor of their choice at very affordable rates and send their medical reports to that doctor. User just has to upload their medical reports which we will then visualize for the ease of the doctor and to assist the doctor in viewing and diagnosing the patient quickly. Medical reports can be in the form of X-Ray, MRI or simple medical tests. ",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node index.js"
-    },
-    "keywords": [
-        "Medical Application",
-        "Economical Health"
-    ],
-    "author": "M. Bilal Akbar",
-    "license": "ISC",
-    "dependencies": {
-        "config": "^3.3.3",
-        "express": "^4.17.1",
-        "joi": "^17.3.0",
-        "mongodb": "^3.6.3",
-        "mongoose": "^5.11.2",
-        "nodemon": "^2.0.6"
-    }
+  "name": "sehat",
+  "version": "1.0.0",
+  "description": "SEHAT in which we aim to provide an e-health care system for the general public located anywhere in the country. It is designed to overcome everyone’s medical needs in little time and with convenience. It allows users to monitor their health conditions. It also offers users the ability to contact any available doctor of their choice at very affordable rates and send their medical reports to that doctor. User just has to upload their medical reports which we will then visualize for the ease of the doctor and to assist the doctor in viewing and diagnosing the patient quickly. Medical reports can be in the form of X-Ray, MRI or simple medical tests. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "keywords": [
+    "Medical Application",
+    "Economical Health"
+  ],
+  "author": "M. Bilal Akbar",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^3.3.3",
+    "express": "^4.17.1",
+    "joi": "^17.3.0",
+    "mongodb": "^3.6.3",
+    "mongoose": "^5.11.2",
+    "nodemon": "^2.0.6"
+  }
 }
