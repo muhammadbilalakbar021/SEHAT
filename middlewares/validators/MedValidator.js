@@ -1,6 +1,6 @@
 let { PatientSchema } = require("../../models/PatientModel");
 module.exports = async function(req, res, next) {
-    const { error } = await PatientSchema.validate(req.body);
+    const { error } = await PatientSchema.validateMedRecord(req.body);
     if (error)
         return res.status(400).send(
             error.details.map((d) => {

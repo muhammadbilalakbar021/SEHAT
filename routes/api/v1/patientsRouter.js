@@ -6,7 +6,8 @@ const patientValidator = require("../../../middlewares/validators/patientValidat
 const duplicateEmailValidator = require("../../../middlewares/validators/duplicateEmailValidator");
 const loginValidator = require("../../../middlewares/validators/loginValidator");
 const infoValidator = require("../../../middlewares/validators/infoValidator");
-const infoUpdateEmailValidator = require("../../../middlewares/validators/infoUpdateEmailValidator");
+const idValidator = require("../../../middlewares/validators/idValidator");
+const MedValidator = require("../../../middlewares/validators/MedValidator");
 
 
 // Get request for returning all patient's list
@@ -43,8 +44,14 @@ router.post(
     }
 );
 
-router.put("/informationupdate", infoUpdateEmailValidator, infoValidator, async(req, res) => {
+router.put("/informationupdate", idValidator, infoValidator, async(req, res) => {
     patient = await PatientSchema.updateInfo(req.body)
+    res.send(patient)
+
+})
+
+router.put("/medicalHistory", idValidator, MedValidator, async(req, res) => {
+    patient = await PatientSchema.addRecord(req.body)
     res.send(patient)
 
 })
