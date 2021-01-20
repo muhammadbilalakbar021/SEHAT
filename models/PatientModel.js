@@ -90,24 +90,13 @@ patientSchema.methods.addPatient = async function(PatientName) {
         password: PatientName.password,
     });
 
-    const DuplicateEmailChechk = PatientModel.findOne({
-        emailAddress: PatientName.emailAddress,
-    }).then(async function(user) {
-        if (!user) {
-            console.log("User Found")
-            const patient = await Patient_Obj.save();
-            return {
-                id: patient._id,
-                name: patient.title + " " + patient.fname + " " + patient.lname,
-                role: patient.role,
-                pic: patient.pic,
-            };
-        } else {
-            console.log("Email already registerd with this Email")
-            return "Email already registerd with this Email"
-        }
-    })
-    return DuplicateEmailChechk
+    const patient = await Patient_Obj.save();
+    return {
+        id: patient._id,
+        name: patient.title + " " + patient.fname + " " + patient.lname,
+        role: patient.role,
+        pic: patient.pic,
+    };
 };
 
 // patientSchema.virtual("annualSalary").get(function () {

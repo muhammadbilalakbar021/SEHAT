@@ -3,6 +3,7 @@ const router = express.Router();
 const Joi = require("joi");
 const Patient = require("../../../models/PatientModel");
 const patientValidator = require("../../../middlewares/validators/patientValidator");
+const duplicateEmailValidator = require("../../../middlewares/validators/duplicateEmailValidator");
 
 // Get request for returning all patient's list
 router.get("/", async(req, res) => {
@@ -24,7 +25,7 @@ router.get("/patientById/:id", async(req, res) => {
 });
 
 // Post request for adding paatient
-router.post("/", patientValidator, async(req, res) => {
+router.post("/", patientValidator, duplicateEmailValidator, async(req, res) => {
     patients = new Patient();
     p = await patients.addPatient(req.body);
     // Return Patient list
