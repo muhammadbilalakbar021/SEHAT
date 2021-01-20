@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
+const { func } = require("joi");
 var sess_; // global session, NOT recommended
 
 const patientSchema = new mongoose.Schema({
@@ -64,6 +65,28 @@ patientSchema.statics.validate = async function(RequestedBody) {
     //  Validating
     return validatePatient(RequestedBody);
 };
+
+patientSchema.statics.validateInfo = async function(RequestedBody) {
+    //  Validating
+    return UpdateInformation(RequestedBody);
+};
+
+patientSchema.statics.updateInfo = async function(RequestedBody) {
+    let patient = await PatientModel.findById(RequestedBody.id);
+
+    let updateDynamicSchema = {...patient }
+    updateDynamicSchema._doc["blood"] = RequestedBody.blood
+    updateDynamicSchema._doc["height"] = RequestedBody.height
+    updateDynamicSchema._doc["martial_status"] = RequestedBody.martial_status
+    updateDynamicSchema._doc["DOB"] = RequestedBody.DOB
+
+    patient = updateDynamicSchema
+    patient_ = await patient.save();
+
+
+    console.log(patient_)
+
+}
 
 patientSchema.statics.getPatientByEmailPasscode = async function(
     RequestedInformation
@@ -131,6 +154,19 @@ function validatePatient(patient) {
         emailAddress: Joi.string().email().min(6).required(),
         gender: Joi.string().required(),
         password: Joi.string().min(5).required(),
+    });
+    // Returniing the resuslt
+    return schema.validate(patient, { abortEarly: false });
+}
+
+function UpdateInformation(patient) {
+    // Designing JOI Validation schema
+    const schema = Joi.object({
+        id: Joi.string().required(),
+        blood: Joi.string().required(),
+        height: Joi.number().required(),
+        martial_status: Joi.string().min(2).required(),
+        DOB: Joi.string().min(3).required(),
     });
     // Returniing the resuslt
     return schema.validate(patient, { abortEarly: false });

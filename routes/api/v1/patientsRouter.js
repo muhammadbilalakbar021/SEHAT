@@ -5,6 +5,9 @@ const { PatientSchema } = require("../../../models/PatientModel");
 const patientValidator = require("../../../middlewares/validators/patientValidator");
 const duplicateEmailValidator = require("../../../middlewares/validators/duplicateEmailValidator");
 const loginValidator = require("../../../middlewares/validators/loginValidator");
+const infoValidator = require("../../../middlewares/validators/infoValidator");
+const infoUpdateEmailValidator = require("../../../middlewares/validators/infoUpdateEmailValidator");
+
 
 // Get request for returning all patient's list
 router.get("/", async(req, res) => {
@@ -39,6 +42,12 @@ router.post(
         res.send(p);
     }
 );
+
+router.put("/informationupdate", infoUpdateEmailValidator, infoValidator, async(req, res) => {
+    patient = await PatientSchema.updateInfo(req.body)
+    res.send(patient)
+
+})
 
 router.get("/:page?/:perPage?", async(req, res) => {
     const page = req.params.page ? Number(req.params.page) : 1;
