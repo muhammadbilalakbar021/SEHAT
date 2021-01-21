@@ -18,7 +18,8 @@ const patientSchema = new mongoose.Schema({
         default: "patient",
     },
     information: Object,
-    medical_History: Array
+    medical_History: Array,
+    vitals: Array
 });
 const PatientModel = mongoose.model("PatientDb", patientSchema);
 
@@ -75,6 +76,11 @@ patientSchema.statics.validateMedRecord = async function(RequestedBody) {
     return ValidateMedicalRecord(RequestedBody);
 };
 
+patientSchema.statics.validateVitals = async function(RequestedBody) {
+    //  Validating
+    return ValidateVitalsRecord(RequestedBody);
+};
+
 patientSchema.statics.updateInfo = async function(RequestedBody) {
     let patient = await PatientModel.findById(RequestedBody.id);
 
@@ -82,6 +88,7 @@ patientSchema.statics.updateInfo = async function(RequestedBody) {
     updateDynamicSchema["blood"] = RequestedBody.blood;
     updateDynamicSchema["height"] = RequestedBody.height;
     updateDynamicSchema["martial_status"] = RequestedBody.martial_status;
+    updateDynamicSchema["address"] = RequestedBody.address;
     patient.DOB = RequestedBody.DOB;
     patient.information = {...updateDynamicSchema };
     patient.save();
@@ -99,11 +106,31 @@ patientSchema.statics.addRecord = async function(RequestedBody) {
     updateDynamicSchema["treatment"] = RequestedBody.treatment;
     updateDynamicSchema["pic"] = RequestedBody.pic;
 
-
-    patient.medical_History = {...updateDynamicSchema };
+    // Spread Operator
+    let a = [...patient.medical_History]
+    a.push(updateDynamicSchema)
+    patient.medical_History = a;
     console.log(patient)
     patient.save();
 }
+
+patientSchema.statics.addVitals = async function(RequestedBody) {
+    let patient = await PatientModel.findById(RequestedBody.id);
+
+    let updateDynamicSchema = {};
+    updateDynamicSchema["heart_beat"] = RequestedBody.heart_beat;
+    updateDynamicSchema["glucoose"] = RequestedBody.glucoose;
+    updateDynamicSchema["blood_pressure"] = RequestedBody.blood_pressure;
+    updateDynamicSchema["weight"] = RequestedBody.weight;
+
+    // Spread Operator
+    let a = [...patient.vitals]
+    a.push(updateDynamicSchema)
+    patient.vitals = a;
+    console.log(patient)
+    patient.save();
+}
+
 
 
 patientSchema.statics.getPatientByEmailPasscode = async function(
@@ -185,6 +212,20 @@ function UpdateInformation(patient) {
         height: Joi.number().required(),
         martial_status: Joi.string().min(2).required(),
         DOB: Joi.string().min(3).required(),
+        address: Joi.string().min(2).required(),
+    });
+    // Returniing the resuslt
+    return schema.validate(patient, { abortEarly: false });
+}
+
+function ValidateVitalsRecord(patient) {
+    // Designing JOI Validation schema
+    const schema = Joi.object({
+        id: Joi.string().required(),
+        heart_beat: Joi.number().required(),
+        glucoose: Joi.number().required(),
+        blood_pressure: Joi.number().required(),
+        weight: Joi.number().required(),
     });
     // Returniing the resuslt
     return schema.validate(patient, { abortEarly: false });
