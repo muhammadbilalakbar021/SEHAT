@@ -186,6 +186,8 @@ function UpdateInformation(patient) {
     height: Joi.number().required(),
     martial_status: Joi.string().min(2).required(),
     DOB: Joi.string().min(3).required(),
+    pic: Joi.string().required(),
+    address: Joi.string().min(8).required(),
   });
   // Returniing the resuslt
   return schema.validate(patient, { abortEarly: false });
