@@ -90,6 +90,7 @@ patientSchema.statics.updateInfo = async function (RequestedBody) {
   patient.emailAddress = RequestedBody.emailAddress;
   patient.information = { ...updateDynamicSchema };
   patient.save();
+  console.log("ss");
 };
 
 patientSchema.statics.addRecord = async function (RequestedBody) {
