@@ -41,6 +41,8 @@ patientSchema.statics.getPatientById = async function (PatientId) {
     Ph: patient.Ph,
     role: patient.role,
     pic: patient.pic,
+    information: patient.information,
+    medical_history: patient.medical_History,
   };
 };
 
