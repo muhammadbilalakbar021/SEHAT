@@ -37,7 +37,7 @@ patientSchema.statics.getPatientById = async function (PatientId) {
     lname: patient.lname,
     email: patient.emailAddress,
     gender: patient.gender,
-    dob: patient.DOB,
+    DOB: patient.DOB,
     Ph: patient.Ph,
     role: patient.role,
     pic: patient.pic,
