@@ -189,6 +189,7 @@ function UpdateInformation(patient) {
     DOB: Joi.string().min(3).required(),
     pic: Joi.string().required(),
     address: Joi.string().min(8).required(),
+    emailAddress: Joi.string().email().min(6).required(),
   });
   // Returniing the resuslt
   return schema.validate(patient, { abortEarly: false });
