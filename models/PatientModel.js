@@ -85,6 +85,7 @@ patientSchema.statics.updateInfo = async function (RequestedBody) {
   updateDynamicSchema["address"] = RequestedBody.address;
   patient.DOB = RequestedBody.DOB;
   patient.pic = RequestedBody.pic;
+  patient.emailAddress = RequestedBody.emailAddress;
   patient.information = { ...updateDynamicSchema };
   patient.save();
 };
