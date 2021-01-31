@@ -152,6 +152,7 @@ patientSchema.methods.addPatient = async function (PatientName) {
     name: patient.title + " " + patient.fname + " " + patient.lname,
     role: patient.role,
     pic: patient.pic,
+    gender: patient.gender,
   };
 };
 
