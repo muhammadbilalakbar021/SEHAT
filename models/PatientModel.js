@@ -171,7 +171,7 @@ function validatePatient(patient) {
     lname: Joi.string().min(3).required(),
     title: Joi.string().min(2).required(),
     DOB: Joi.string().min(3).required(),
-    pic: Joi.string(),
+    pic: Joi.optional(),
     Ph: Joi.number().required(),
     emailAddress: Joi.string().email().min(6).required(),
     gender: Joi.string().required(),
@@ -189,7 +189,7 @@ function UpdateInformation(patient) {
     height: Joi.number().required(),
     martial_status: Joi.string().min(2).required(),
     DOB: Joi.string().min(3).required(),
-    pic: Joi.string(),
+    pic: Joi.optional(),
     address: Joi.string().min(8).required(),
     emailAddress: Joi.string().email().min(6).required(),
   });
