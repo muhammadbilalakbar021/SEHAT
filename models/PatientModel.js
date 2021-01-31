@@ -126,6 +126,7 @@ patientSchema.statics.getPatientByEmailPasscode = async function (
       patientCredientials.lname,
     role: patientCredientials.role,
     pic: patientCredientials.pic,
+    gender: patientCredientials.gender,
   };
 };
 
@@ -170,7 +171,7 @@ function validatePatient(patient) {
     lname: Joi.string().min(3).required(),
     title: Joi.string().min(2).required(),
     DOB: Joi.string().min(3).required(),
-    pic: Joi.string().required(),
+    pic: Joi.string(),
     Ph: Joi.number().required(),
     emailAddress: Joi.string().email().min(6).required(),
     gender: Joi.string().required(),
@@ -188,7 +189,7 @@ function UpdateInformation(patient) {
     height: Joi.number().required(),
     martial_status: Joi.string().min(2).required(),
     DOB: Joi.string().min(3).required(),
-    pic: Joi.string().required(),
+    pic: Joi.string(),
     address: Joi.string().min(8).required(),
     emailAddress: Joi.string().email().min(6).required(),
   });
