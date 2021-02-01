@@ -88,6 +88,7 @@ patientSchema.statics.updateInfo = async function (RequestedBody) {
   patient.DOB = RequestedBody.DOB;
   patient.pic = RequestedBody.pic;
   patient.emailAddress = RequestedBody.emailAddress;
+  patient.Ph = RequestedBody.Ph;
   patient.information = { ...updateDynamicSchema };
   patient.save();
 };
@@ -193,6 +194,7 @@ function UpdateInformation(patient) {
     pic: Joi.optional(),
     address: Joi.string().min(8).required(),
     emailAddress: Joi.string().email().min(6).required(),
+    Ph: Joi.number().required(),
   });
   // Returniing the resuslt
   return schema.validate(patient, { abortEarly: false });
