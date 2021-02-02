@@ -28,23 +28,14 @@ patientSchema.statics.getPatientById = async function(PatientId) {
     // Validating if given user is in our List
     //const patient = patients.find(p => p.id === parseInt(PatientId));
     // If not existing, return 404
+
     patient = await PatientModel.findById(PatientId, function(err, patient) {
         if (err) return "Error 404 No patient with the given id in the record";
     });
-    return {
-        id: patient._id,
-        title: patient.title,
-        fname: patient.fname,
-        lname: patient.lname,
-        email: patient.emailAddress,
-        gender: patient.gender,
-        DOB: patient.DOB,
-        Ph: patient.Ph,
-        role: patient.role,
-        pic: patient.pic,
-        information: patient.information,
-        medical_history: patient.medical_History,
-    };
+    let p = {...patient }
+    delete p.password
+    console.log(p)
+    return p
 };
 
 patientSchema.statics.getPatient = async function() {
