@@ -9,6 +9,7 @@ const infoValidator = require("../../../middlewares/validators/infoValidator");
 const idValidator = require("../../../middlewares/validators/idValidator");
 const MedValidator = require("../../../middlewares/validators/MedValidator");
 const VitalsValidator = require("../../../middlewares/validators/VitalsValidator");
+const medicineValidator = require("../../../middlewares/validators/medicineValidator");
 
 
 // Get request for returning all patient's list
@@ -59,6 +60,18 @@ router.put("/medicalHistory", idValidator, MedValidator, async(req, res) => {
 
 router.put("/addVitals", idValidator, VitalsValidator, async(req, res) => {
     patient = await PatientSchema.addVitals(req.body)
+    res.send(patient)
+
+})
+
+router.put("/medicine_status", idValidator, medicineValidator, async(req, res) => {
+    patient = await PatientSchema.addMedicineStatus(req.body)
+    res.send(patient)
+
+})
+
+router.delete("/medicine_status", idValidator, async(req, res) => {
+    patient = await PatientSchema.removeMedicineStatus(req.body)
     res.send(patient)
 
 })
