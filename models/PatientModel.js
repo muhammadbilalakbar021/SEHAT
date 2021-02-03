@@ -45,7 +45,6 @@ patientSchema.statics.getPatient = async function () {
   patient_Obj_Result.forEach(function (doc, err) {
     result.push(doc);
   });
-  console.log(result);
   return result;
 };
 
@@ -169,7 +168,6 @@ patientSchema.statics.getPatientByEmailPasscode = async function (
     emailAddress: RequestedInformation.emailAddress,
     password: RequestedInformation.password,
   });
-  console.log(patientCredientials);
   return {
     id: patientCredientials._id,
     name:
