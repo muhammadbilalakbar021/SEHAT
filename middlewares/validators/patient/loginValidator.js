@@ -1,4 +1,4 @@
-let { PatientModel } = require("../../models/PatientModel");
+let { PatientModel } = require("../../../models/PatientModel");
 module.exports = async function(req, res, next) {
     await PatientModel.findOne({ emailAddress: req.body.emailAddress }).then(
         async function(user) {

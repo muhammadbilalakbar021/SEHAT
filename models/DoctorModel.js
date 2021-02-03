@@ -1,36 +1,18 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
+const { boolean } = require("joi");
+const { PatientModel } = require("./PatientModel");
 var sess_; // global session, NOT recommended
 
 const doctorSchema = new mongoose.Schema({
-    fname: String,
-    lname: String,
-    title: String,
-    DOB: String,
-    pic: String,
-    Ph: Number,
-    emailAddress: String,
-    password: String,
-    isDoctor: Boolean,
-    isAdmin: Boolean,
     rating: Number,
     mainofficeaddress: String,
-    review: [{
-        doctorid: String,
-        uuid: String
-    }],
-    qualification: [{
-        type: String,
-        startyear: Number,
-        endyear: Number,
-        institutes: [{
-            Named: String
-        }]
-    }],
-    services: String,
-    workexperence: String,
-    experties: String,
-    speciality: String
+    review: Array,
+    qualification: Array,
+    services: Array,
+    workexperence: Array,
+    experties: Array,
+    speciality: Array
 
 });
 const doctorModel = mongoose.model("doctorDb", doctorSchema);
@@ -49,70 +31,79 @@ doctorSchema.statics.getdoctorById = async function(doctorId) {
     ));
 };
 
-doctorSchema.statics.getdoctor = async function() {
-    var result = [];
-    const doctor_Obj_Result = await doctorModel.find();
-    doctor_Obj_Result.forEach(function(doc, err) {
-        result.push(doc);
-    });
-    console.log(result);
-    return result;
+doctorSchema.statics.addServices = async function(RequestedBody) {
+
+    let doctor = await PatientModel.findById(RequestedBody.id)
+        // doctor.isDoctor.services = doctor.isDoctor.services ? [...doctor.isDoctor.services] : []
+    doctor.isDoctor.services = RequestedBody.services
+    doctor.markModified("isDoctor")
+    doctor.save()
+    return doctor
 };
 
-doctorSchema.statics.getPage = async function(page = 1, perPage = 10) {
-    return this.find()
-        .limit(perPage)
-        .skip((page - 1) * perPage);
+doctorSchema.statics.review = async function(RequestedBody) {
+
+    let doctor = await PatientModel.findById(RequestedBody.id)
+    let updateDynamicSchema = {
+        date: RequestedBody.date,
+        pic: RequestedBody.pic,
+        userName: RequestedBody.userName,
+        patientId: RequestedBody.patientId,
+        Star: RequestedBody.Star,
+        comment: RequestedBody.comment
+    };
+
+    doctor.isDoctor.review = doctor.isDoctor.review ? [...doctor.isDoctor.review] : []
+    doctor.isDoctor.review.push(updateDynamicSchema)
+    doctor.markModified("isDoctor")
+    doctor.save()
+    return doctor
 };
 
-doctorSchema.statics.validate = async function(RequestedBody) {
-    //  Validating
-    return validatedoctor(RequestedBody);
+doctorSchema.statics.qualification = async function(RequestedBody) {
+
+    let doctor = await PatientModel.findById(RequestedBody.id)
+    doctor.isDoctor.qualification = RequestedBody.qualification
+    doctor.markModified("isDoctor")
+    doctor.save()
+    return doctor
 };
 
-doctorSchema.statics.getdoctorByEmailPasscode = async function(RequestedInformation) {
-    const doctorCredientials = await doctorModel.findOne({
-        emailAddress: RequestedInformation.emailAddress,
-        password: RequestedInformation.password
-    });
-    console.log(doctorCredientials);
-    sess_Id_ = doctorCredientials._id;
-    return doctorCredientials;
+doctorSchema.statics.workexperence = async function(RequestedBody) {
+
+    let doctor = await PatientModel.findById(RequestedBody.id)
+    doctor.isDoctor.workexperence = RequestedBody.workexperence
+    doctor.markModified("isDoctor")
+    doctor.save()
+    return doctor
 };
 
-//can be called on instance like. let p = new doctor(); p.doStuffOnSIngleRecord();
-//dont use arrow functions here
-doctorSchema.methods.adddoctor = async function(doctorName) {
-    // Add doctor
-    const doctor_Obj = new doctorModel({
-        fname: doctorName.fname,
-        lname: doctorName.lname,
-        title: doctorName.title,
-        DOB: doctorName.DOB,
-        pic: doctorName.pic,
-        Ph: doctorName.Ph,
-        emailAddress: doctorName.emailAddress,
-        password: doctorName.password
-    });
+doctorSchema.statics.experties = async function(RequestedBody) {
 
-    await doctor_Obj.save();
-    var result = [];
-    const product_Obj_Result = await doctorModel.find().sort({ _id: -1 }).limit(1);;
-    // product_Obj_Result.forEach(function (doc, err) {
-    //   result.push(doc);
-    // });
-    return product_Obj_Result;
+    let doctor = await PatientModel.findById(RequestedBody.id)
+    doctor.isDoctor.experties = RequestedBody.experties
+    doctor.markModified("isDoctor")
+    doctor.save()
+    return doctor
 };
 
-// doctorSchema.virtual("annualSalary").get(function () {
-//   return this.salary * 12;
-// });
+doctorSchema.statics.achievments = async function(RequestedBody) {
 
-doctorSchema.post("save", async(doc) => {
-    //https://mongoosejs.com/docs/middleware.html
-    //this method will be called when a save is successful on a single record
+    let doctor = await PatientModel.findById(RequestedBody.id)
+    doctor.isDoctor.speciality = RequestedBody.speciality
+    doctor.markModified("isDoctor")
+    doctor.save()
+    return doctor
+};
 
-});
+doctorSchema.statics.publications = async function(RequestedBody) {
+
+    let doctor = await PatientModel.findById(RequestedBody.id)
+    doctor.isDoctor.publications = RequestedBody.publications
+    doctor.markModified("isDoctor")
+    doctor.save()
+    return doctor
+};
 
 function validatedoctor(doctor) {
     // Designing JOI Validation schema
