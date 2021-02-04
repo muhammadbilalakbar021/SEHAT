@@ -177,7 +177,7 @@ patientSchema.statics.addVitals = async function (RequestedBody) {
   let update = [...patient.vitals];
   update.push(updateDynamicSchema);
   patient.vitals = update;
-  patient.save();
+  await patient.save();
   return patient;
 };
 
@@ -295,6 +295,19 @@ function validateMS(patient) {
     dosage: Joi.string().required(),
     description: Joi.string().required(),
     pic: Joi.array().optional(),
+  });
+  // Returniing the resuslt
+  return schema.validate(patient, { abortEarly: false });
+}
+
+function validateVit(patient) {
+  const schema = Joi.object({
+    id: Joi.string().required(),
+    date: Joi.string().required(),
+    blood_pressure: Joi.string().required(),
+    heart_beat: Joi.string().required(),
+    blood_glucose: Joi.string().required(),
+    weight: Joi.string().required(),
   });
   // Returniing the resuslt
   return schema.validate(patient, { abortEarly: false });
