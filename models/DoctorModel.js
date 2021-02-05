@@ -27,6 +27,8 @@ doctorSchema.statics.getdoctorById = async function (doctorId) {
   }));
 };
 
+// This is correct
+// RequestedBody is part of controller not model.
 doctorSchema.statics.addServices = async function (RequestedBody) {
   let doctor = await PatientModel.findById(RequestedBody.id);
   doctor.isDoctor.services = RequestedBody.services;

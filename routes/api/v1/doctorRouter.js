@@ -51,8 +51,12 @@ router.post("/AddAchievements", idValidator, async (req, res) => {
 });
 
 router.post("/AddPublications", idValidator, async (req, res) => {
-  doctor = await Doctor.publications(req.body);
-  res.send(doctor);
+  try {
+    doctor = await Doctor.publications(req.body);
+    res.send(doctor);
+  } catch (err) {
+    return res.status(400).send("Error Message");
+  }
 });
 
 module.exports = router;
