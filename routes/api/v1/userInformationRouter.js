@@ -17,14 +17,15 @@ router.get("/getUserInformation/:id", async(req, res) => {
 
 
 router.post(
-    "/addUserInformation", UserInformationValidator, async(req, res) => {
-        try {
-            infromation = new userInformationSchema()
-            userInformation = infromation.addUserInfomration(req.body)
-            res.send(userInformation);
-        } catch (err) {
-            res.status(400).send("Error from addUserInformation")
-        }
+    "/addUserInformation", async(req, res) => {
+        // try {
+
+        // } catch (err) {
+        //     res.status(400).json("Error from addUserInformation")
+        // }
+        infromation = new userInformationSchema()
+        userInformation = infromation.addUserInfomration(req.body)
+        res.send(userInformation);
     }
 );
 

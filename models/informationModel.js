@@ -64,4 +64,4 @@ function validate(user) {
 
 userInformationSchema.set("toJSON", { virtuals: true });
 
-module.exports = UserInformationModel;
+module.exports = userInformationSchema;

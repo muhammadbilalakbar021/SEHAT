@@ -286,4 +286,5 @@ function validateVit(user) {
 }
 
 userSchema.set("toJSON", { virtuals: true });
+const userSchema = mongoose.model("user", userSchema);
 module.exports = { userSchema, UserModel };
