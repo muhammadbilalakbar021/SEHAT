@@ -202,7 +202,27 @@ userSchema.statics.validate = async function(RequestedBody) {
     return validateuser(RequestedBody);
 };
 
+userSchema.statics.validateInfo = async function(RequestedBody) {
+    //  Validating
+    return UpdateInformation(RequestedBody);
+};
 
+function UpdateInformation(user) {
+    // Designing JOI Validation schema
+    const schema = Joi.object({
+        id: Joi.string().required(),
+        blood: Joi.string().required(),
+        height: Joi.number().required(),
+        martial_status: Joi.string().min(2).required(),
+        DOB: Joi.string().min(3).required(),
+        pic: Joi.optional(),
+        address: Joi.string().min(8).required(),
+        emailAddress: Joi.string().email().min(6).required(),
+        Ph: Joi.number().required(),
+    });
+    // Returniing the resuslt
+    return schema.validate(user, { abortEarly: false });
+}
 
 userSchema.statics.validateMedRecord = async function(RequestedBody) {
     //  Validating
@@ -286,5 +306,5 @@ function validateVit(user) {
 }
 
 userSchema.set("toJSON", { virtuals: true });
-const userSchema = mongoose.model("user", userSchema);
+// const userSchema = mongoose.model("user", userSchema);
 module.exports = { userSchema, UserModel };
