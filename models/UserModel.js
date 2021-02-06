@@ -66,6 +66,7 @@ userSchema.statics.getUserByEmailPassword = async function (data) {
 //can be called on instance like. let p = new user(); p.doStuffOnSIngleRecord();
 //dont use arrow functions here
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 userSchema.methods.adduser = async function(userName) {
     // Add user
     const user_Obj = new UserModel({
@@ -161,6 +162,40 @@ userSchema.statics.validate = async function (RequestedBody) {
   return validateUser(RequestedBody);
 };
 
+=======
+userSchema.methods.addUser = async function (data) {
+  // Add user
+  const user_Obj = new UserModel({
+    fname: data.fname,
+    lname: data.lname,
+    title: data.title,
+    DOB: data.DOB,
+    gender: data.gender,
+    pic: data.pic,
+    Ph: data.Ph,
+    email: data.email,
+    password: data.password,
+    role: ["patient"],
+  });
+
+  const user = await user_Obj.save();
+  return {
+    _id: user._id,
+    name: user.title + " " + user.fname + " " + user.lname,
+    role: user.role,
+    pic: user.pic,
+    gender: user.gender,
+    role: user.role,
+  };
+};
+
+//Validation Functions Sign up user info
+userSchema.statics.validate = async function (RequestedBody) {
+  //  Validating
+  return validateUser(RequestedBody);
+};
+
+>>>>>>> Stashed changes
 //Function
 function validateUser(user) {
   // Designing JOI Validation schema
@@ -181,9 +216,12 @@ function validateUser(user) {
 
 userSchema.set("toJSON", { virtuals: true });
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 // const userSchema = mongoose.model("user", userSchema);
 module.exports = { userSchema, UserModel };
 =======
+=======
+>>>>>>> Stashed changes
 <<<<<<< HEAD
 const UserModel = mongoose.model("userDb", userSchema);
 module.exports = UserModel;
@@ -191,4 +229,7 @@ module.exports = UserModel;
 const userSchema = mongoose.model("user", userSchema);
 module.exports = { userSchema, UserModel };
 >>>>>>> 2c9513a730d0e39c9e2bc7d00b7c7e8ab459cd0b
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes

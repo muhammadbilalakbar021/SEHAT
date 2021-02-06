@@ -53,6 +53,10 @@ router.post(
         userInformation = infromation.addUserInfomration(req.body)
         res.send(userInformation);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+>>>>>>> 2c9513a730d0e39c9e2bc7d00b7c7e8ab459cd0b
+>>>>>>> Stashed changes
 =======
 >>>>>>> 2c9513a730d0e39c9e2bc7d00b7c7e8ab459cd0b
 >>>>>>> Stashed changes

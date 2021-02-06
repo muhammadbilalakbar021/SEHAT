@@ -77,7 +77,12 @@ module.exports = UserInformationModel;
 =======
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 module.exports = UserModel;
+=======
+module.exports = userInformationSchema;
+>>>>>>> 2c9513a730d0e39c9e2bc7d00b7c7e8ab459cd0b
+>>>>>>> Stashed changes
 =======
 module.exports = userInformationSchema;
 >>>>>>> 2c9513a730d0e39c9e2bc7d00b7c7e8ab459cd0b
