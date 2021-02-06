@@ -17,7 +17,7 @@ router.get("/:id", async(req, res) => {
 });
 //Create a new one
 router.post(
-    "/add-user-information",
+    "/addUserInformation",
     UserInformationValidator,
     async(req, res) => {
         try {
@@ -31,11 +31,10 @@ router.post(
 );
 
 router.put(
-    "/add-user-information",
+    "/addUserInformation",
     UserInformationValidator,
     async(req, res) => {
         try {
-            console.log("dd");
             user_info = await UserInformationModel.updateUserInformation(req.body);
             return res.status(200).send(user_info);
         } catch (err) {

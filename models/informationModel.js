@@ -46,9 +46,7 @@ userInformationSchema.statics.updateUserInformation = async function(user) {
     return info;
 };
 
-userInformationSchema.statics.ValidateUserInformation = async function(
-    RequestedBody
-) {
+userInformationSchema.statics.ValidateUserInformation = async function(RequestedBody) {
     //  Validating
     return validate(RequestedBody);
 };
