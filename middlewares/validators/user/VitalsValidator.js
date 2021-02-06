@@ -1,4 +1,4 @@
-let { PatientSchema } = require("../../../models/PatientModel");
+let { userSchema } = require("../../../models/UserModel");
 module.exports = async function(req, res, next) {
     const { error } = await PatientSchema.validateVitals(req.body);
     if (error)
