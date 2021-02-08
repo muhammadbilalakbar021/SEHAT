@@ -6,13 +6,8 @@ var sess_; // global session, NOT recommended
 
 const doctorSchema = new mongoose.Schema({
     rating: Number,
-    mainofficeaddress: String,
-    review: Array,
-    qualification: Array,
-    services: Array,
-    workexperence: Array,
-    experties: Array,
-    speciality: Array,
+    userId: String,
+    licenseNo: String
 });
 const doctorModel = mongoose.model("doctorDb", doctorSchema);
 
@@ -48,9 +43,7 @@ doctorSchema.statics.review = async function(RequestedBody) {
         comment: RequestedBody.comment,
     };
 
-    doctor.isDoctor.review = doctor.isDoctor.review ?
-        [...doctor.isDoctor.review] :
-        [];
+    doctor.isDoctor.review = doctor.isDoctor.review ? [...doctor.isDoctor.review] : [];
     doctor.isDoctor.review.push(updateDynamicSchema);
     doctor.markModified("isDoctor");
     doctor.save();

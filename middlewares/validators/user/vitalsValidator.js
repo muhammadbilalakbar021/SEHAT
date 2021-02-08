@@ -1,6 +1,7 @@
-let UserModel = require("../../../models/UserModel");
+let VitalsModel = require("../../../models/vitalsModels");
 module.exports = async function(req, res, next) {
-    const { error } = await UserModel.validate(req.body);
+    console.log(req.body)
+    const { error } = await VitalsModel.ValidateUserVitals(req.body);
     if (error) return res.send({ error: error.details[0].message });
     req.isValidated = true;
     next();
