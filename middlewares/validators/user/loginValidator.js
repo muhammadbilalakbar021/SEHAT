@@ -1,4 +1,4 @@
-let UserModel = require("../../../models/UserModel");
+let UserModel = require("../../../models/user/UserModel");
 module.exports = async function (req, res, next) {
   let user = await UserModel.findOne({ email: req.body.email });
   if (!user) {
