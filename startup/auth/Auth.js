@@ -1,4 +1,4 @@
-const UserRouter = require("../../routes/api/v1/user/UserRouter");
-module.exports = function (app) {
-  app.use("/api/auth", UserRouter);
+const AuthRouter = require("../../routes/api/v1/auth/AuthRouter");
+module.exports = function(app) {
+    app.use("/api/auth", AuthRouter);
 };
