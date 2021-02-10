@@ -54,7 +54,25 @@ MedicalHistorySchema.statics.appendUserMedicalHistory = async(userid, user) => {
     return info
 }
 
-MedicalHistorySchema.statics.updateMedicalHistory = async function(user) {};
+MedicalHistorySchema.statics.updateMedicalHistory = async function(userid, user) {
+    // let u = await MedicalHistoryModel.find({ 'userid': userid }, { history: { $elemMatch: { _id: user.historyId } } })
+    // console.log(u[0].history)
+    // u[0].history[0] = {...user.data}
+    let info = await MedicalHistoryModel.findOne({ userid });
+    for (let key in info.history) {
+        if (info.history[key]._id == user.historyId) {
+            info.history[key] = {...user.data }
+            console.log(info.history[key])
+            break
+        }
+    }
+    info.markModified("info")
+        // console.log(info)
+    return await info.save()
+
+
+
+};
 
 MedicalHistorySchema.statics.ValidateUserMedicalHistory = async function(RequestedBody) {
     //  Validating

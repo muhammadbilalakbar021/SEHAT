@@ -15,5 +15,11 @@ Get user by Id : GET http://localhost:3000/api/user/:id
     Get information of user by Id : GET  http://localhost:3000/api/information/:id
     Save user information :         POST http://localhost:3000/api/information/addUserInformation/
     Update user information :       PUT  http://localhost:3000/api/information/updateUserInformation
+
+    2. Medical History
+    Get Medical History of user by Id : GET  http://localhost:3000/api/medicalHistory/:id
+    Save user Medical History :         POST http://localhost:3000/api/medicalHistory/addUserMedicalHistory/
+    Append user Medical History :       PUT  http://localhost:3000/api/medicalHistory/appendUserMedicalHistory
+    Update user Medical History :       PUT  http://localhost:3000/api/medicalHistory/updateUserMedicalHistory
     
 
