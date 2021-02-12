@@ -2,13 +2,16 @@
 
 ## API End points
 
-## Authentication 
+## Authentication
+
 Login and SignUp
-For Login :   POST http://localhost:3000/api/user/login
+For Login : POST http://localhost:3000/api/user/login
+// also mention object schema which is expected at this route
 For Sign Up : POST http://localhost:3000/api/auth/signup
 
 ## User
-Get all users :  GET http://localhost:3000/api/user/
+
+Get all users : GET http://localhost:3000/api/user/
 Get user by Id : GET http://localhost:3000/api/user/:id
 
     1. Information
@@ -21,5 +24,3 @@ Get user by Id : GET http://localhost:3000/api/user/:id
     Save user Medical History :         POST http://localhost:3000/api/medicalHistory/addUserMedicalHistory/
     Append user Medical History :       PUT  http://localhost:3000/api/medicalHistory/appendUserMedicalHistory
     Update user Medical History :       PUT  http://localhost:3000/api/medicalHistory/updateUserMedicalHistory
-    
-
