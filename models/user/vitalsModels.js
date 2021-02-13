@@ -12,10 +12,6 @@ const VitalsSchema = new mongoose.Schema({
         weight: String,
     }],
     userid: String,
-    isCreated: {
-        type: Boolean,
-        default: true,
-    },
 });
 
 VitalsSchema.statics.getVitalsById = async(userid) => {
@@ -24,7 +20,6 @@ VitalsSchema.statics.getVitalsById = async(userid) => {
 };
 
 VitalsSchema.methods.addUserVitals = async function(user) {
-    console.log("hello", user)
     const Vitals_Obj = new VitalsModel({
         vitals: [{
             date: user.date,
@@ -46,17 +41,30 @@ VitalsSchema.statics.appendUserVitals = async(userid, user) => {
     return info
 }
 
-VitalsSchema.statics.updateVitals = async function(user) {};
+VitalsSchema.statics.updateUserVitals = async function(userid, userVital) {
+    console.log("hello")
+    let info = await VitalsModel.findOne({ userid });
+    for (let key in info.vitals) {
+        if (info.vitals[key]._id == userVital.vitalId) {
+            info.vitals[key] = {...userVital.data }
+                // console.log(info.vitals[key])
+            break
+        }
+    }
+    info.markModified("vitals")
+    console.log("info")
+    return await info.save()
+};
 
 VitalsSchema.statics.ValidateUserVitals = async function(RequestedBody) {
     //  Validating
-    return validate(RequestedBody);
+    return validate(RequestedBody.data);
 };
 
 function validate(vitals) {
     // Designing JOI Validation schema
     const schema = Joi.object({
-        id: Joi.string().required(),
+        // id: Joi.string().required(),
         date: Joi.string().required(),
         blood_pressure: Joi.string(),
         blood_glucose: Joi.string(),

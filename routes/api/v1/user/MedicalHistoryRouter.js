@@ -48,7 +48,7 @@ router.post(
 
 router.put(
     "/updateUserMedicalHistory/:id",
-    // UserMedicalHistoryValidator,
+    UserMedicalHistoryValidator,
     async(req, res) => {
         try {
             user_info = await UserMedicalHistoryModel.updateMedicalHistory(

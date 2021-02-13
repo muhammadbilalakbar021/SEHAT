@@ -23,4 +23,18 @@ Get user by Id : GET http://localhost:3000/api/user/:id
     Get Medical History of user by Id : GET  http://localhost:3000/api/medicalHistory/:id
     Save user Medical History :         POST http://localhost:3000/api/medicalHistory/addUserMedicalHistory/
     Append user Medical History :       PUT  http://localhost:3000/api/medicalHistory/appendUserMedicalHistory
-    Update user Medical History :       PUT  http://localhost:3000/api/medicalHistory/updateUserMedicalHistory
+    Update user Medical History :       PUT  http://localhost:3000/api/medicalHistory/
+    updateUserMedicalHistory
+
+    3. Vitals
+    Get Vitals of user by Id : GET  http://localhost:3000/api/Vitals/:id
+    Save user Vitals         : POST POST http://localhost:3000/api/Vitals/addUserVitals
+    Append user Vitals       : PUT  http://localhost:3000/api/Vitals/appendUserVitals
+    Update user Vitals       : PUT  http://localhost:3000/api/Vitals/updateUserVitals
+
+    3. Medicine Status
+    Get Medicine Status of user by Id : GET  http://localhost:3000/api/medicineStatus/:id
+    Save user Medicine Status         : POST POST http://localhost:3000/api/medicineStatus/addUserMedicineStatus
+    Append user Medicine Status       : PUT  http://localhost:3000/api/medicineStatus/appendUserMedicineStatus
+    Update user Medicine Status       : PUT  http://localhost:3000/api/medicineStatus/updateUserMedicineStatus
+
