@@ -76,7 +76,7 @@ MedicalHistorySchema.statics.updateMedicalHistory = async function(userid, user)
 
 MedicalHistorySchema.statics.ValidateUserMedicalHistory = async function(RequestedBody) {
     //  Validating
-    return validate(RequestedBody);
+    return validate(RequestedBody.data);
 };
 
 function validate(patient) {
