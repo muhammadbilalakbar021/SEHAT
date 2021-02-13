@@ -29,7 +29,6 @@ userSchema.statics.getUserById = async function(userId) {
     });
     let p = {...user };
     delete p._doc.password;
-
     return p._doc;
 };
 
@@ -79,14 +78,27 @@ userSchema.methods.addUser = async function(data) {
     const user = await user_Obj.save();
     return {
         _id: user._id,
-        name: user.title + " " + user.fname + " " + user.lname,
+        title: user.title,
+        fname: user.fname,
+        lname: user.lname,
         role: user.role,
         pic: user.pic,
         gender: user.gender,
-        role: user.role,
     };
 };
 
+
+userSchema.statics.updateUser = async function(data) {
+    // Add user
+
+    let user = await UserModel.findById(data.id);
+    user.dob = data.dob;
+    user.pic = data.pic;
+    user.ph = data.ph;
+    user.email = data.email;
+    user = await user.save();
+    return user;
+}
 userSchema.methods.addDoctor = async function(id, licenseNo) {
     // Add Doctor
 

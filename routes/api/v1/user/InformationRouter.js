@@ -2,45 +2,41 @@ const express = require("express");
 const router = express.Router();
 const UserInformationValidator = require("../../../../middlewares/validators/user/InformationValidator");
 const UserInformationModel = require("../../../../models/user/InformationModel");
+const UserModel = require("../../../../models/user/UserModel");
 
-// Get request for returning specific patient
-router.get("/:id", async(req, res) => {
-    try {
-        information = await UserInformationModel.getUserInformationById(
-            req.params.id
-        );
-        // If Patient exist, return patient record
-        return res.status(200).send(information);
-    } catch (err) {
-        res.status(400).send("Error from UserInformation by Id!");
-    }
-});
 //Create a new one
-router.post(
-    "/addUserInformation",
-    UserInformationValidator,
-    async(req, res) => {
-        try {
-            information = new UserInformationModel();
-            user_info = await information.addUserInformation(req.body);
-            return res.status(200).send(user_info);
-        } catch (err) {
-            return res.status(400).send("Error from addUserInformation");
-        }
-    }
-);
+router.post("/add", UserInformationValidator, async (req, res) => {
+  try {
+    let user = await UserModel.updateUser({
+      ...req.body.user,
+      id: req.body.id,
+    });
+    information = new UserInformationModel();
+    user_info = await information.addUserInformation(
+      req.body.id,
+      req.body.information
+    );
+    return res.status(200).send({ ...user, information: user_info });
+  } catch (err) {
+    return res.status(400).send({ error: "Error from addUserInformation" });
+  }
+});
 
-router.put(
-    "/updateUserInformation",
-    UserInformationValidator,
-    async(req, res) => {
-        try {
-            user_info = await UserInformationModel.updateUserInformation(req.body);
-            return res.status(200).send(user_info);
-        } catch (err) {
-            return res.status(400).send("Error from updateUserInformation");
-        }
-    }
-);
+router.put("/update", UserInformationValidator, async (req, res) => {
+  try {
+    let user = await UserModel.updateUser({
+      ...req.body.user,
+      id: req.body.id,
+    });
+    let information = await UserInformationModel.updateUserInformation(
+      req.body.id,
+      req.body.information
+    );
+    return res.status(200).send({ ...user, information });
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send({ error: "Error from updateUserInformation" });
+  }
+});
 
 module.exports = router;
