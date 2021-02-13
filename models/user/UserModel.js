@@ -116,6 +116,7 @@ userSchema.methods.addDoctor = async function (id, licenseNo) {
   return "Successfully Added!";
 };
 
+<<<<<<< Updated upstream
 userSchema.statics.updateUser = async function (data) {
   // Add user
 
@@ -126,6 +127,34 @@ userSchema.statics.updateUser = async function (data) {
   user.email = data.email;
   user = await user.save();
   return user;
+=======
+userSchema.methods.addDoctor = async function(id, licenseNo) {
+    // Add Doctor
+
+    let doctor = new DoctorModel({
+        userid: id,
+        userid2: id,
+        licenseNo,
+        online_fee: 0,
+        offline_fee: 0,
+        about: "",
+        status: "",
+        type: "",
+        specialty: "",
+    });
+    let record = new DoctorRecordModel({
+        qualification: [],
+        services: [],
+        workExperience: [],
+        expertise: [],
+        achievements: [],
+        userid: id,
+    });
+
+    await doctor.save();
+    await record.save();
+    return "Successfully Added!";
+>>>>>>> Stashed changes
 };
 
 //Validation Functions Sign up user info

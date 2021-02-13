@@ -5,14 +5,19 @@ const AdminValidator = require("../../../../middlewares/validators/admin/AdminVa
 const UserModel = require("../../../../models/user/UserModel");
 
 // Post request for adding paatient
-router.post("/", AdminValidator, async (req, res) => {
-  try {
-    p = await UserModel.addDoctor(req.body);
-    // Return Patient list
-    return res.status(200).send(p);
-  } catch (err) {
-    return res.status(400).send("Error Adding Doctor!");
-  }
+router.post("/", AdminValidator, async(req, res) => {
+    try {
+        user = await UserModel.findById(req.body.id);
+        user.role.push("doctor");
+        await user.save();
+        p = new UserModel()
+        a = await p.addDoctor(req.body.id, req.body.licenseNo);
+        // Return Patient list
+        return res.status(200).send("a");
+    } catch (err) {
+        console.log(err)
+        return res.status(400).send("Error Adding Doctor!");
+    }
 });
 
 module.exports = router;
