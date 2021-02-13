@@ -2,6 +2,17 @@ const mongoose = require("mongoose");
 const Joi = require("joi");
 
 const doctorSchema = new mongoose.Schema({
+<<<<<<< Updated upstream
+  userid: String,
+  licenseNo: String,
+  online_fee: String,
+  office_fee: String,
+  about: String,
+  status: String,
+  type: String,
+  specialty: String,
+  userid2: { type: mongoose.Schema.Types.ObjectId, ref: "userdbs" },
+=======
     userid: String,
     licenseNo: String,
     online_fee: String,
@@ -11,6 +22,7 @@ const doctorSchema = new mongoose.Schema({
     type: String,
     specialty: String,
     userid2: { type: mongoose.Schema.Types.ObjectId, ref: "userdbs" },
+>>>>>>> Stashed changes
 });
 
 doctorSchema.statics.getDoctorById = async function(userid) {
