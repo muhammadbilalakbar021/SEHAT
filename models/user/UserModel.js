@@ -89,10 +89,10 @@ userSchema.methods.addUser = async function(data) {
 
 userSchema.methods.addDoctor = async function(id, licenseNo) {
     // Add Doctor
-    user = await UserModel.findById(id);
-    user.role.push("doctor");
+
     let doctor = new DoctorModel({
         userid: id,
+        userid2: id,
         licenseNo,
         online_fee: 0,
         offline_fee: 0,
@@ -109,8 +109,7 @@ userSchema.methods.addDoctor = async function(id, licenseNo) {
         achievements: [],
         userid: id,
     });
-    let user = await UserModel.findById(id);
-    await user.save();
+
     await doctor.save();
     await record.save();
     return "Successfully Added!";
