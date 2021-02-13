@@ -10,7 +10,7 @@ const doctorSchema = new mongoose.Schema({
   status: String,
   type: String,
   specialty: String,
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  userid2: { type: mongoose.Schema.Types.ObjectId, ref: "userdbs" },
 });
 
 doctorSchema.statics.getDoctorById = async function (userid) {
