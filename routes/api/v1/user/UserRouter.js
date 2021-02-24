@@ -35,7 +35,7 @@ router.get("/information/:id", async (req, res) => {
 
     return res.status(200).send({ ...user, information });
   } catch (err) {
-    res.status(400).send({ error: "Error from UserInformation by Id!" });
+    res.status(400).send({ error: "Error from User Information by Id!" });
   }
 });
 
