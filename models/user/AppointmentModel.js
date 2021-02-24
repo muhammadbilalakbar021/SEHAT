@@ -2,27 +2,51 @@ const mongoose = require("mongoose");
 
 const userAppointmentSchema = new mongoose.Schema({
   appointment: Array,
-  userid: String,
+  _id: { type: mongoose.Schema.Types.ObjectId, ref: "UserDb" },
 });
-userAppointmentSchema.methods.addAppointment = async function (
-  userid,
-  appointment
-) {
-  let User = new UserAppointmentModel({
-    userid,
-    appointment: [{ ...appointment }],
-  });
-  User.save();
-  return User;
+
+userAppointmentSchema.statics.getAppointmentById = async function (id) {
+  let doctor = await UserAppointmentModel.findById(id);
+  return doctor?.appointment;
 };
-userAppointmentSchema.statics.appendAppointment = async function (
-  userid,
-  Appointment
-) {
-  let userAppointment = await userRecordModel.findOne({ userid });
-  userAppointment.Appointment.push(Appointment);
-  userAppointment.save();
-  return userAppointment.Appointment;
+
+userAppointmentSchema.methods.addAppointment = async function (data) {
+  let User = await UserAppointmentModel.findById(data.user._id);
+  if (!User) {
+    User = new UserAppointmentModel({
+      _id: data.user._id,
+      appointment: [
+        {
+          doctor_id: data.doctor._id,
+          fname: data.doctor.fname,
+          lname: data.doctor.lname,
+          pic: data.doctor.pic,
+          specialty: data.doctor.specialty,
+          gender: data.doctor.gender,
+          day: data.appointment.day,
+          time: data.appointment.time,
+          status: "pending",
+          _id: new mongoose.Types.ObjectId(),
+        },
+      ],
+    });
+  } else {
+    User.appointment.push({
+      doctor_id: data.doctor._id,
+      fname: data.doctor.fname,
+      lname: data.doctor.lname,
+      pic: data.doctor.pic,
+      specialty: data.doctor.specialty,
+      gender: data.doctor.gender,
+      day: data.appointment.day,
+      time: data.appointment.time,
+      status: "pending",
+      _id: new mongoose.Types.ObjectId(),
+    });
+  }
+
+  User = await User.save();
+  return User;
 };
 
 userAppointmentSchema.statics.ValidateUserAppointment = async function (

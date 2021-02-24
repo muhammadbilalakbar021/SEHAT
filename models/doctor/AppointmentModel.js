@@ -2,19 +2,47 @@ const mongoose = require("mongoose");
 
 const DoctorAppointmentSchema = new mongoose.Schema({
   appointment: Array,
-  Doctorid: String,
+  _id: { type: mongoose.Schema.Types.ObjectId },
 });
+DoctorAppointmentSchema.statics.getAppointmentById = async function (id) {
+  let doctor = await DoctorAppointmentModel.findById(id);
+  return doctor?.appointment;
+};
+DoctorAppointmentSchema.methods.addAppointment = async function (data) {
+  let User = await DoctorAppointmentModel.findById(data.doctor._id);
+  if (!User) {
+    User = new DoctorAppointmentModel({
+      _id: data.doctor._id,
+      appointment: [
+        {
+          user_id: data.user._id,
+          fname: data.user.fname,
+          lname: data.user.lname,
+          pic: data.user.pic,
+          gender: data.user.gender,
+          day: data.appointment.day,
+          time: data.appointment.time,
+          status: "pending",
+          _id: new mongoose.Types.ObjectId(),
+        },
+      ],
+    });
+  } else {
+    User.appointment.push({
+      user_id: data.user._id,
+      fname: data.user.fname,
+      lname: data.user.lname,
+      pic: data.user.pic,
+      gender: data.user.gender,
+      day: data.appointment.day,
+      time: data.appointment.time,
+      status: "pending",
+      _id: new mongoose.Types.ObjectId(),
+    });
+  }
 
-DoctorAppointmentSchema.methods.addAppointment = async function (
-  userid,
-  appointment
-) {
-  let doctor = new DoctorAppointmentModel({
-    userid,
-    appointment: [{ ...appointment }],
-  });
-  doctor.save();
-  return doctor;
+  User = await User.save();
+  return User;
 };
 
 DoctorAppointmentSchema.statics.appendAppointment = async function (

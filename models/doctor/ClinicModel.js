@@ -2,12 +2,12 @@ const mongoose = require("mongoose");
 
 const doctorClinicSchema = new mongoose.Schema({
   clinic: Array,
-  userid: String,
+  _id: { type: mongoose.Schema.Types.ObjectId },
 });
 
-doctorClinicSchema.methods.addClinic = async function (userid, clinic) {
+doctorClinicSchema.methods.addClinic = async function (_id, clinic) {
   let doctor = new DoctorClinicModel({
-    userid,
+    _id,
     clinic: [{ ...clinic }],
   });
   doctor.save();

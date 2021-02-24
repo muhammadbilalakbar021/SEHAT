@@ -8,6 +8,7 @@ const router = express.Router();
 // Get request for returning User by login
 router.post("/login", loginValidator, async (req, res) => {
   try {
+    console.log(req.body);
     const User = await UserModel.getUserByEmailPassword(req.body);
     return res.status(200).send(User);
   } catch (err) {

@@ -2,50 +2,46 @@ const mongoose = require("mongoose");
 
 const doctorOnlineScheduleSchema = new mongoose.Schema({
   online_schedule: Array,
-  userid: String,
+  _id: { type: mongoose.Schema.Types.ObjectId },
 });
 
-doctorOnlineScheduleSchema.statics.getDoctorOnlineScheduleById = async function (
-  userid
-) {
-  let doctor = await DoctorOnlineScheduleModel.findOne({ userid });
-  return doctor;
+doctorOnlineScheduleSchema.statics.getOnlineScheduleById = async function (id) {
+  let doctor = await DoctorOnlineScheduleModel.findById(id);
+  return doctor?.online_schedule;
 };
 
 doctorOnlineScheduleSchema.methods.addOnlineSchedule = async function (
-  userid,
+  _id,
   online_schedule
 ) {
-  let doctor = new DoctorOnlineScheduleModel({
-    userid,
-    online_schedule,
-  });
-  doctor.save();
-  return doctor.OnlineSchedule;
-};
+  let OS = await DoctorOnlineScheduleModel.findById(_id);
+  if (!OS) {
+    OS = new DoctorOnlineScheduleModel({
+      _id,
+      online_schedule,
+    });
+  } else {
+    OS.online_schedule = online_schedule;
+  }
 
-doctorOnlineScheduleSchema.statics.updateOnlineSchedule = async function (
-  userid,
-  OnlineSchedule
-) {
-  let doctor = await DoctorOnlineScheduleModel.findOne({
-    userid,
-  });
-  doctor.OnlineSchedule = OnlineSchedule;
-  doctor.save();
-  return doctor.OnlineSchedule;
+  OS = await OS.save();
+  return OS.online_schedule;
 };
 
 doctorOnlineScheduleSchema.statics.bookOnlineSchedule = async function (
-  userid,
-  OnlineSchedule
+  id,
+  book
 ) {
-  let doctor = await DoctorOnlineScheduleModel.findOne({
-    userid,
-  });
-  // not added
-  doctor.save();
-  return doctor.OnlineSchedule;
+  let OS = await DoctorOnlineScheduleModel.findById(id);
+  for (let x in OS.online_schedule) {
+    if (OS.online_schedule[x].day === book.day) {
+      OS.online_schedule[x].time[book.index].status = true;
+      break;
+    }
+  }
+  OS.markModified("online_schedule");
+  OS = await OS.save();
+  return OS.online_schedule;
 };
 
 doctorOnlineScheduleSchema.set("toJSON", { virtuals: true });

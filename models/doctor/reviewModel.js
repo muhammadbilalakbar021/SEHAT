@@ -5,22 +5,26 @@ var sess_; // global session, NOT recommended
 
 const doctorReviewSchema = new mongoose.Schema({
   review: Array,
-  rating: Number,
-  userid: String,
+  _id: { type: mongoose.Schema.Types.ObjectId },
 });
 
-doctorReviewSchema.methods.addReview = async function (userid, review) {
-  let doctor = new DoctorReviewModel({
-    userid,
-    review: [{ ...review }],
-    rating: review.start,
-  });
-  doctor.save();
-  return doctor;
+doctorReviewSchema.methods.addReview = async function (_id, review) {
+  let doctor = await DoctorOnlineScheduleModel.findById(_id);
+  if (!doctor) {
+    doctor = new DoctorReviewModel({
+      _id,
+      review: [{ ...review }],
+    });
+  } else {
+    doctor.review.push({ ...review });
+  }
+
+  doctor = await doctor.save();
+  return doctor.review;
 };
-doctorReviewSchema.statics.getDoctorReviewById = async function (userid) {
-  let doctor = await DoctorReviewModel.findOne({ userid });
-  return doctor;
+doctorReviewSchema.statics.getReviewById = async function (id) {
+  let doctor = await DoctorReviewModel.findById(id);
+  return doctor?.review;
 };
 
 doctorReviewSchema.statics.appendReview = async function (userid, review) {

@@ -9,6 +9,8 @@ const doctorRecordSchema = new mongoose.Schema({
   workExperience: Array,
   expertise: Array,
   achievements: Array,
+  publications: Array,
+  _id: { type: mongoose.Schema.Types.ObjectId },
 });
 
 // Its a static Method which can be called as doctorRecord.doStuff();
@@ -17,59 +19,57 @@ doctorRecordSchema.statics.getDoctorRecordById = async function (userid) {
   return doctor;
 };
 
+doctorRecordSchema.statics.getRecord = async function (id, name) {
+  let doctor = await DoctorRecordModel.findById(id);
+  return doctor[name];
+};
 // This is correct
 // RequestedBody is part of controller not model.
-doctorRecordSchema.statics.addServices = async function (userid, services) {
-  let doctor = await DoctorRecordModel.findOne({ userid });
+doctorRecordSchema.statics.addServices = async function (id, services) {
+  let doctor = await DoctorRecordModel.findById(id);
   doctor.services = services;
-  await doctor.save();
+  doctor = await doctor.save();
   return doctor.services;
 };
 
-doctorRecordSchema.statics.qualification = async function (
-  userid,
+doctorRecordSchema.statics.addQualification = async function (
+  id,
   qualification
 ) {
-  let doctor = await DoctorRecordModel.findOne({ userid });
+  let doctor = await DoctorRecordModel.findById(id);
   doctor.qualification = qualification;
-  doctor.save();
+  doctor = await doctor.save();
   return doctor.qualification;
 };
 
-doctorRecordSchema.statics.workExperience = async function (
-  userid,
+doctorRecordSchema.statics.addWorkExperience = async function (
+  id,
   workExperience
 ) {
-  let doctor = await DoctorRecordModel.findOne({ userid });
+  let doctor = await DoctorRecordModel.findById(id);
   doctor.workExperience = workExperience;
-  doctor.save();
-  return doctor;
+  doctor = await doctor.save();
+  return doctor.workExperience;
 };
 
-doctorRecordSchema.statics.expertise = async function (userid, expertise) {
-  let doctor = await DoctorRecordModel.findOne({ userid });
+doctorRecordSchema.statics.addExpertise = async function (id, expertise) {
+  let doctor = await DoctorRecordModel.findById(id);
   doctor.expertise = expertise;
-  doctor.save();
+  doctor = await doctor.save();
   return doctor.expertise;
 };
 
-doctorRecordSchema.statics.achievements = async function (
-  userid,
-  achievements
-) {
-  let doctor = await DoctorRecordModel.findOne({ userid });
+doctorRecordSchema.statics.addAchievements = async function (id, achievements) {
+  let doctor = await DoctorRecordModel.findById(id);
   doctor.achievements = achievements;
   doctor.save();
   return doctor.achievements;
 };
 
-doctorRecordSchema.statics.publications = async function (
-  userid,
-  publications
-) {
-  let doctor = await DoctorRecordModel.findOne({ userid });
+doctorRecordSchema.statics.addPublications = async function (id, publications) {
+  let doctor = await DoctorRecordModel.findById(id);
   doctor.publications = publications;
-  doctor.save();
+  doctor = await doctor.save();
   return doctor.publications;
 };
 

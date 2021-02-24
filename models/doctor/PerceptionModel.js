@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const DoctorPerceptionSchema = new mongoose.Schema({
   perception: Array,
-  userid: String,
+  _id: { type: mongoose.Schema.Types.ObjectId },
 });
 
 DoctorPerceptionSchema.methods.addPerception = async function (

@@ -1,8 +1,9 @@
-let VitalsModel = require("../../../models/user/VitalsModels");
+const MedicineStatusModel = require("../../../models/user/medicineStatusModel");
 module.exports = async function (req, res, next) {
-  console.log(req.body);
-  const { error } = await VitalsModel.ValidateUserVitals(req.body);
-  if (error) return res.send({ error: error.details[0].message });
+  const { error } = await MedicineStatusModel.ValidateUserMedicineStatus(
+    req.body
+  );
+  if (error) return res.status(400).send({ error: error.details[0].message });
   req.isValidated = true;
   next();
 };

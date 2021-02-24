@@ -7,30 +7,18 @@ router.get("/", async () => {
   // not add
 });
 
-// Get request for returning specific doctor
-router.get("/:id", async (req, res) => {
-  try {
-    schedule = await OnlineScheduleModel.getOnlineScheduleModelById(
-      req.params.id
-    );
-    return res.status(200).send(schedule);
-  } catch (err) {
-    return res.status(404).send("Error getting doctor Record!");
-  }
-});
-
 // Services (Post)
 // doctor serviceValidator,
 router.post("/", async (req, res) => {
   try {
-    schedule = new OnlineScheduleModel();
-    doctor = await schedule.addOnlineSchedule(
-      req.body.id,
-      req.body.online_schedule
-    );
+    let schedule = new OnlineScheduleModel();
+    let doctor = await schedule.addOnlineSchedule(req.body.id, req.body.online);
     return res.status(200).send(doctor);
   } catch (err) {
-    return res.status(404).send("Error adding doctor  Online Schedule!");
+    console.error(err);
+    return res
+      .status(404)
+      .send({ error: "Error adding doctor  Online Schedule!" });
   }
 });
 
