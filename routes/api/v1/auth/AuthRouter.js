@@ -1,5 +1,5 @@
 const express = require("express");
-const duplicateEmailValidator = require("../../../../middlewares/validators/user/duplicateEmailValidator");
+const duplicateEmailValidator = require("../../../../middlewares/validators/user/DuplicateEmailValidator");
 const loginValidator = require("../../../../middlewares/validators/user/loginValidator");
 const UserValidator = require("../../../../middlewares/validators/user/UserValidator");
 const UserModel = require("../../../../models/user/UserModel");
