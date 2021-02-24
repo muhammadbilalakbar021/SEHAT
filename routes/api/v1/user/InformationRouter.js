@@ -32,7 +32,8 @@ router.put("/update", UserInformationValidator, async (req, res) => {
       req.body.id,
       req.body.information
     );
-    return res.status(200).send({ ...user, information });
+    console.log({ ...user, information });
+    return res.status(200).send({ ...user._doc, information });
   } catch (err) {
     console.log(err);
     return res.status(400).send({ error: "Error from updateUserInformation" });
