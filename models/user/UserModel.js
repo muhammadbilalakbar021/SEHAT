@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
+const { func } = require("joi");
 const DoctorModel = require("../doctor/DoctorModel");
 const DoctorRecordModel = require("../doctor/RecordModel");
+var sess_; // global session, NOT recommended
 
 const userSchema = new mongoose.Schema({
   fname: String,
@@ -159,7 +161,6 @@ function validateDoctor(user) {
   const schema = Joi.object({
     id: Joi.string().required(),
     licenseNo: Joi.string().required(),
-    specialty: Joi.string().required(),
   });
   // Returniing the resuslt
   return schema.validate(user, { abortEarly: false });
