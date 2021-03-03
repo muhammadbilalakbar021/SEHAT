@@ -161,6 +161,7 @@ function validateDoctor(user) {
   const schema = Joi.object({
     id: Joi.string().required(),
     licenseNo: Joi.string().required(),
+    specialty: Joi.string().required(),
   });
   // Returniing the resuslt
   return schema.validate(user, { abortEarly: false });
